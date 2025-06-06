@@ -36,3 +36,89 @@ const applyTextValue = async (value: string) => {
     }}
   />
 </div>
+const playVideo = async () => {
+  await previewRef.current?.play();
+};
+
+const pauseVideo = async () => {
+  await previewRef.current?.pause();
+};
+<div className={styles.controls}>
+  <button
+    onClick={async () => {
+      await playVideo();
+    }}
+  >
+    Play video
+  </button>
+  &nbsp;
+  <button
+    onClick={async () => {
+      await pauseVideo();
+    }}
+  >
+    Pause video
+  </button>
+</div>
+preview.onStateChange = async (state) => {
+  // Find title element
+  const element = preview.findElement((element) => element.source.name === 'Title');
+  if (element) {
+    setValue(element.source.text);
+  }
+};
+{value && <div>State: {value}</div>}
+
+<div className={styles.controls}>
+  <button
+    onClick={async () => {
+      await changeTitle(`Title ${counter}`);
+      setCounter(counter + 1);
+    }}
+  >
+    Change Title
+  </button>
+  &nbsp;
+  <button
+    onClick={async () => {
+      await previewRef.current?.undo();
+    }}
+  >
+    Undo
+  </button>
+  &nbsp;
+  <button
+    onClick={async () => {
+      await previewRef.current?.redo();
+    }}
+  >
+    Redo
+  </button>
+</div>
+const preview = new Preview(htmlElement, 'interactive', 'public-0x6hcqpfhrhw16d67ogth7ry');
+<button
+  onClick={async () => {
+    await previewRef.current?.setTime(0);
+  }}
+>
+  Seek to Start
+</button>
+&nbsp;
+<button
+  onClick={async () => {
+    const preview = previewRef.current;
+    if (preview && preview.state) {
+      // Move the time state right before the end
+      await preview.setTime(preview.state.duration - 0.001);
+    }
+  }}
+>
+  Seek to End
+</button>
+button
+  onClick={async () => {
+    await previewRef.current?.setZoom('fixed', 0.5);
+  }}
+>
+  Zoom 50%
+</button>
