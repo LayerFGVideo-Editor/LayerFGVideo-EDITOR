@@ -122,3 +122,21 @@ button
 >
   Zoom 50%
 </button>
+// Once the SDK is ready, load a template from our project
+preview.onReady = async () => {
+  await preview.loadTemplate(process.env.NEXT_PUBLIC_TEMPLATE_ID!);
+  setIsReady(true);
+};
+// Listen for state changes of the preview
+preview.onStateChange = (state) => {
+  setCurrentState(state);
+  setVideoAspectRatio(state.width / state.height);
+};
+// Listen for state changes of the preview
+preview.onLoad = () => {
+  setIsLoading(true);
+};
+
+preview.onLoadComplete = () => {
+  setIsLoading(false);
+};
