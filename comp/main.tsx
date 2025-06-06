@@ -20,3 +20,19 @@ const setUpPreview = (htmlElement: HTMLDivElement) => {
 
   previewRef.current = preview;
 };
+const applyTextValue = async (value: string) => {
+  // Change the 'Title' element to the provided text value
+  // For more information: https://creatomate.com/docs/api/rest-api/the-modifications-object
+  await previewRef.current?.setModifications({
+    Title: value,
+  });
+};
+<div className={styles.controls}>
+  <input
+    type="text"
+    placeholder="LayerFGVideo Editor"
+    onChange={async (e) => {
+      await applyTextValue(e.target.value);
+    }}
+  />
+</div>
